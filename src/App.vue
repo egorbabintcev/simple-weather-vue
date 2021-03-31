@@ -1,12 +1,15 @@
 <template>
   <div class="container">
+    <div class="bg" :class="weather?.main.temp > 20 ? 'warm' : ''"></div>
     <city-input v-model="cityInput" @afterInput="fetchWeather"></city-input>
+    <weather-display v-if="weather" :weather="weather"></weather-display>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import CityInput from "@/components/CityInput";
+import WeatherDisplay from "@/components/WeatherDisplay";
 
 const API_KEY = "a01b8bf4005d07aaea6f68a91dc2b7c3";
 const API_URL = `https://api.openweathermap.org/data/2.5/weather`;
@@ -15,6 +18,7 @@ export default {
   name: "App",
   components: {
     CityInput,
+    WeatherDisplay,
   },
   data() {
     return {
@@ -52,9 +56,32 @@ export default {
 .container {
   margin: 0 auto;
   max-width: 480px;
+  min-height: 100vh;
+  position: relative;
   padding: {
     left: rem(15);
     right: rem(15);
+    top: rem(60);
+  }
+}
+
+.bg {
+  background: {
+    image: url("./assets/img/cold-bg.jpg");
+    position: center;
+    repeat: no-repeat;
+    size: cover;
+  }
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+  z-index: -1;
+
+  &.warm {
+    background-image: url("./assets/img/warm-bg.jpg");
   }
 }
 </style>
