@@ -3,6 +3,7 @@
     <div class="bg" :class="weather?.main.temp > 20 ? 'warm' : ''"></div>
     <city-input v-model="cityInput" @afterInput="fetchWeather"></city-input>
     <weather-display v-if="weather" :weather="weather"></weather-display>
+    <weather-fallback v-else></weather-fallback>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import axios from "axios";
 import CityInput from "@/components/CityInput";
 import WeatherDisplay from "@/components/WeatherDisplay";
+import WeatherFallback from "@/components/WeatherFallback";
 
 const API_KEY = "a01b8bf4005d07aaea6f68a91dc2b7c3";
 const API_URL = `https://api.openweathermap.org/data/2.5/weather`;
@@ -19,6 +21,7 @@ export default {
   components: {
     CityInput,
     WeatherDisplay,
+    WeatherFallback,
   },
   data() {
     return {
@@ -33,7 +36,6 @@ export default {
           `${API_URL}?q=${this.cityInput}&appid=${API_KEY}&units=metric`
         );
         this.weather = data;
-        console.log(data);
       } catch (err) {
         this.weather = null;
       }
@@ -50,7 +52,6 @@ export default {
 
 #app {
   color: hsl(210, 29%, 24%);
-  padding-top: rem(60);
 }
 
 .container {
