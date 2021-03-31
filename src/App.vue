@@ -13,7 +13,8 @@ import CityInput from "@/components/CityInput";
 import WeatherDisplay from "@/components/WeatherDisplay";
 import WeatherFallback from "@/components/WeatherFallback";
 
-const API_KEY = "a01b8bf4005d07aaea6f68a91dc2b7c3";
+const API_KEY = process.env.VUE_APP_API_TOKEN;
+console.log(process.env);
 const API_URL = `https://api.openweathermap.org/data/2.5/weather`;
 
 export default {
